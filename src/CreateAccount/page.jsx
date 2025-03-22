@@ -7,17 +7,27 @@ const CreateAccount = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const fullName = e.target.fullName.value.trim();
+    const phoneNumber = e.target.phoneNumber.value.trim();
+    const email = e.target.emailAddress.value.trim();
+    const password = e.target.password.value.trim();
+    const agencyValue = e.target.agency?.value;
+
+    if (!fullName || !phoneNumber || !email || !password || !agencyValue) {
+      alert("Please fill in all required fields marked with *");
+      return;
+    }
+
     const formData = {
-      fullName: e.target.fullName.value,
-      phoneNumber: e.target.phoneNumber.value,
-      email: e.target.emailAddress.value,
-      password: e.target.password.value,
-      companyName: e.target.companyName.value,
-      isAgency: e.target.agency.value === "yes",
+      fullName,
+      phoneNumber,
+      email,
+      password,
+      companyName: e.target.companyName.value.trim(),
+      isAgency: agencyValue === "yes",
     };
 
     localStorage.setItem("userData", JSON.stringify(formData));
-
     navigate("/LoginAccount");
   };
 
@@ -40,6 +50,7 @@ const CreateAccount = () => {
             <input
               type="text"
               id="fullName"
+              required
               className="mt-1 block w-full rounded-md border border-[#CBCBCB] bg-[#F7F8F9] px-2 sm:px-3 py-2 text-gray-900 text-sm sm:text-base shadow-sm focus:outline-none focus:ring-1 focus:ring-[#7662E7]"
               placeholder="Enter full name"
             />
